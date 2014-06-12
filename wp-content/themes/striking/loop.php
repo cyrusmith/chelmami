@@ -31,9 +31,10 @@ $class = array('half','third','fourth','fifth','sixth');
 $css = $class[$columns-2];
 $i = 0;
 
+interoFilter_outputForm($wp_query);
 ?>
 
-<?php if ( have_posts() ) while ( have_posts() ) : the_post(); 
+<?php if ( have_posts() ) while ( have_posts() ) : the_post();
 $i++;
 if ($columns != 1) {
 	if ($i%$columns !== 0) {

@@ -157,8 +157,6 @@ function interoFilter_addQueryvars($qvars)
 
 add_action('pre_get_posts', 'interoFilter_searchFilter');
 
-add_action('loop_start', 'interoFilter_outputForm');
-
 add_filter('query_vars', 'interoFilter_addQueryvars');
 
 wp_enqueue_style('intero-filter-style', plugins_url('jquery-ui-1.10.4.custom.min.css', __FILE__));
