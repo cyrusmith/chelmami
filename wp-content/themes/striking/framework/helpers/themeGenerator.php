@@ -140,7 +140,7 @@ class themeGenerator {
 		}
 
 		if (is_archive()){
-			$title = __('Archives','striking_front');
+			$title = __('Афиши','striking_front');
 			if(is_category()){
 				$text = sprintf(__('Category Archive for: ‘%s’','striking_front'),single_cat_title('',false));
 			}elseif(is_tag()){

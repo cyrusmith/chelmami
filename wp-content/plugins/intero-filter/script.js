@@ -20,10 +20,23 @@
         yearSuffix: ''};
 
     $(function () {
+
+        var form = null;
+
         $('.interofilter-form').each(function () {
             var $form = $(this);
+            if (form == null) {
+                form = $form;
+            }
             $form.find('input.datetime').datepicker(l18n);
+
         });
+
+        $('a.clearfilter').click(function () {
+            $('input[name="interofilter_clearfilter"]').val(1);
+            form.submit();
+        });
+
     });
 
 })(jQuery);

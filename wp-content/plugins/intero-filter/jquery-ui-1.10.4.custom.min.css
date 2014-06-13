@@ -1722,11 +1722,10 @@ body .ui-tooltip {
 }
 
 .interofilter-form {
-    padding: 0.5em 0;
+    padding: .5em 0 1.5em;
 }
 
-.interofilter-form .input
-{
+.interofilter-form .input {
     display: inline-block;
     margin-right: 0.5em;
 }
@@ -1743,4 +1742,19 @@ body .ui-tooltip {
 
 .interofilter-form input.numeric {
     width: 5em;
+}
+
+#page a.clearfilter,
+#page a.clearfilter:hover,
+#page a.clearfilter:visited {
+    display: inline-block;
+    border-bottom: 1px dashed #003cb3;
+    color: #003cb3;
+    text-decoration: none;
+    font-size: 0.75em;
+    line-height: 1.4em;
+}
+
+#page a.clearfilter:hover {
+    border: none;
 }
