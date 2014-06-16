@@ -61,7 +61,13 @@ function interoFilter_outputEmpty($args)
     ?>
 
     <h3>Нет мероприятий, удовлетворяющим условиям поиска.</h3>
-    <p>Попробуйте <a href="#" class="clearfilter">очистить фильтр</a></p>
+    <?php
+    if (!empty($_SESSION['interoFilter_session'])):
+        ?>
+        <p>Попробуйте <a href="#" class="clearfilter">очистить фильтр</a></p>
+    <?php
+    endif;
+    ?>
 
 <?php
 
@@ -77,6 +83,15 @@ function interoFilter_outputForm($args)
     $fields = get_option('wpcf-fields');
 
     ?>
+
+    <p><strong>Куда пойти с ребенком в Челябинске?</strong> Родителей, интересующихся досугом своего малыша, предлагаем
+        заглянуть на <strong>детскую афишу Челябинска</strong>. Здесь вы можете отследить премьеры, анонсы и
+        мероприятия, проходящие в городе.</p>
+
+    <p>Кроме того, здесь публикуется информация по развивающим занятиям для детей и мастер-классам для мам.</p>
+
+    <h2 id="cal_title">Афиша Челябинска и Челябинской области</h2>
+
     <form action="" method="post" class="interofilter-form">
         <?php
         foreach ($fields as $key => $field) {
