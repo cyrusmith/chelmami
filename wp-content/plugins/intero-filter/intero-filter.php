@@ -18,18 +18,18 @@ function interoFilter_outputTextField($field, $value = null)
 <?php
 }
 
-function interoFilter_outputDateField($field, $value = null)
+function interoFilter_outputDateField($id, $value = null)
 {
     ?>
-    <input type="text" class="datetime" name="interofilter_<?php echo $field['id'] ?>"
+    <input type="text" class="datetime" name="interofilter_<?php echo $id ?>"
            value="<?php echo !empty($value) ? $value : '' ?>"/>
 <?php
 }
 
-function interoFilter_outputNumberField($field, $value = null)
+function interoFilter_outputNumberField($id, $value = null)
 {
     ?>
-    <input type="text" class="numeric" name="interofilter_<?php echo $field['id'] ?>"
+    <input type="text" class="numeric" name="interofilter_<?php echo $id ?>"
            value="<?php echo !empty($value) ? $value : '' ?>"/>
 
 <?php
@@ -93,29 +93,38 @@ function interoFilter_outputForm($args)
     <h2 id="cal_title">Афиша Челябинска и Челябинской области</h2>
 
     <form action="" method="post" class="interofilter-form">
+
         <?php
-        foreach ($fields as $key => $field) {
+        $field = array_key_exists('city', $fields) ? $fields['city'] : null;
+        if ($field):
             ?>
             <div class="input">
-                <label for="interofilter_<?php echo $field['id'] ?>"><?php echo $field['name'] ?>:</label>
+                <label for="interofilter_city">Город:</label>
                 <?php
-                switch ($field['type']) {
-                    case 'select':
-                        interoFilter_outputSelectField($field, $args->query_vars['interofilter_' . $field['id']]);
-                        break;
-                    case 'date':
-                        interoFilter_outputDateField($field, $args->query_vars['interofilter_' . $field['id']]);
-                        break;
-                    case 'numeric':
-                        interoFilter_outputNumberField($field, $args->query_vars['interofilter_' . $field['id']]);
-                        break;
-                    default:
-                        interoFilter_outputTextField($field, $args->query_vars['interofilter_' . $field['id']]);
-                }
+                interoFilter_outputSelectField($fields['city'], $args->query_vars['interofilter_city']);
                 ?>
             </div>
         <?php
-        }
+        endif;
+        ?>
+        <div class="input">
+            <label for="interofilter_date">Дата:</label>
+            <?php
+            interoFilter_outputDateField('date', $args->query_vars['interofilter_date']);
+            ?>
+        </div>
+        <?php
+        $field = array_key_exists('format', $fields) ? $fields['format'] : null;
+        if ($field):
+            ?>
+            <div class="input">
+                <label for="interofilter_format">Формат:</label>
+                <?php
+                interoFilter_outputSelectField($fields['format'], $args->query_vars['interofilter_format']);
+                ?>
+            </div>
+        <?php
+        endif;
         ?>
         <div class="input submit">
             <button type="submit">
@@ -210,11 +219,25 @@ function interoFilter_searchFilter($query)
                     $fieldVal = $timeStamp . "";
                 }
 
-                $metaQuery[] = array(
-                    'key' => "wpcf-" . $fieldId,
-                    'value' => $fieldVal,
-                    'compare' => $compare
-                );
+                if ($fieldId == "date") {
+                    $metaQuery[] = array(
+                        'key' => "wpcf-date1",
+                        'value' => $fieldVal,
+                        'compare' => '<='
+                    );
+                    $metaQuery[] = array(
+                        'key' => "wpcf-date2",
+                        'value' => $fieldVal,
+                        'compare' => '>='
+                    );
+                } else {
+                    $metaQuery[] = array(
+                        'key' => "wpcf-" . $fieldId,
+                        'value' => $fieldVal,
+                        'compare' => $compare
+                    );
+                }
+
             }
         }
         $metaQuery['relation'] = 'AND';
