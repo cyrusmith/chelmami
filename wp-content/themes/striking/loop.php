@@ -61,6 +61,7 @@ interoFilter_outputForm($wp_query);
                         global $more;
                         $more = 0;
                         the_content(__('Read more &raquo;', 'striking_front'), false); else:
+                        interoFilter_outputExcerptCustoms(get_the_ID(), array('wpcf-timenaddr'));
                         the_excerpt();
                         ?>
                         <a class="read_more_link"

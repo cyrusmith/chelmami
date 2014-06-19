@@ -73,6 +73,19 @@ function interoFilter_outputEmpty($args)
 
 }
 
+function interoFilter_outputExcerptCustoms($postId, $fields)
+{
+    $customs = get_post_custom($postId);
+    foreach ($fields as $fld) {
+        if (!array_key_exists($fld, $customs)) continue;
+        if(!empty($customs[$fld]))
+        {
+            echo '<b>'.$customs[$fld][0].'</b>';
+        }
+    }
+
+}
+
 function interoFilter_outputForm($args)
 {
 
