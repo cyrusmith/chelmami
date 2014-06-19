@@ -102,7 +102,7 @@ class Theme {
 			*/
 			
 			//This enables post-thumbnail support for a theme.
-			add_theme_support('post-thumbnails', array('post', 'page', 'portfolio', 'slideshow'));
+			add_theme_support('post-thumbnails', array('post', 'page', 'portfolio', 'slideshow', 'afisha'));
 			
 			//This enables the naviagation menu ability. 
 			add_theme_support('menus');
