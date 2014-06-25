@@ -39,6 +39,8 @@ function interoFilter_outputSelectField($field, $value = null)
 {
     ?>
     <select name="interofilter_<?php echo $field['id'] ?>">
+        <option <?php echo $value == null ? 'selected="selected"' : ''?> value="">--Все--</option>
+
         <?php
         foreach ($field['data']['options'] as $optKey => $optData) {
             if (!is_array($optData)) continue;
@@ -78,9 +80,8 @@ function interoFilter_outputExcerptCustoms($postId, $fields)
     $customs = get_post_custom($postId);
     foreach ($fields as $fld) {
         if (!array_key_exists($fld, $customs)) continue;
-        if(!empty($customs[$fld]))
-        {
-            echo '<b>'.$customs[$fld][0].'</b>';
+        if (!empty($customs[$fld])) {
+            echo '<b>' . $customs[$fld][0] . '</b>';
         }
     }
 
@@ -167,16 +168,16 @@ function interoFilter_sessionClear()
 
 function interoFilter_session($name, $value = null)
 {
-    if (empty($value)) {
-        if (empty($_SESSION['interoFilter_session'])) {
+    if (is_null($value)) {
+        if (!isset($_SESSION['interoFilter_session'])) {
             return null;
         }
-        if (empty($_SESSION['interoFilter_session'][$name])) {
+        if (!isset($_SESSION['interoFilter_session'][$name])) {
             return null;
         }
         return $_SESSION['interoFilter_session'][$name];
     } else {
-        if (empty($_SESSION['interoFilter_session'])) {
+        if (!isset($_SESSION['interoFilter_session'])) {
             $_SESSION['interoFilter_session'] = array();
         }
         $_SESSION['interoFilter_session'][$name] = $value;
@@ -195,7 +196,7 @@ function interoFilter_searchFilter($query)
         interoFilter_sessionClear();
         echo '<script> window.location="' . $_SERVER["REQUEST_URI"] . '"; </script>';
     } else {
-        foreach ($fields as $fieldName => $fieldName) {
+        foreach ($fields as $fieldName => $fieldValue) {
             $sessionVal = interoFilter_session($fieldName);
             if (!array_key_exists("interofilter_" . $fieldName, $query->query_vars)) {
                 if (!empty($sessionVal)) {
@@ -206,6 +207,7 @@ function interoFilter_searchFilter($query)
             }
         }
     }
+
 
     if (!is_admin() /*&& $query->is_main_query()*/) {
         $metaQuery = array();
@@ -221,7 +223,7 @@ function interoFilter_searchFilter($query)
                     continue;
                 }
 
-                $compare = "LIKE";
+                $compare = "=";
 
                 if ($fields[$fieldId]['type'] == "date") {
                     $dateInfo = date_parse($value);
